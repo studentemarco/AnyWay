@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MapForge</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icone Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --azzurro-chiaro: #e3f2fd;
+            --blu-principale: #0d6efd;
+            --blu-scuro: #0a58ca;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .navbar-custom {
+            background: linear-gradient(135deg, var(--blu-principale), var(--blu-scuro));
+        }
+        
+        .left-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+        
+        .download-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+        }
+        
+        .download-card {
+            border-left: 4px solid var(--blu-principale);
+            transition: transform 0.3s;
+        }
+        
+        .download-card:hover {
+            transform: translateY(-5px);
+            background-color: var(--azzurro-chiaro);
+        }
+        
+        .btn-download {
+            background-color: var(--blu-principale);
+            color: white;
+        }
+        
+        .btn-download:hover {
+            background-color: var(--blu-scuro);
+            color: white;
+        }
+        
+        .section-title {
+            color: var(--blu-principale);
+            border-bottom: 2px solid var(--azzurro-chiaro);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra del titolo in alto -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="bi bi-stack"></i> MapForge
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">About AnyWay</a>
+                    </li>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenuto principale -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Sezione sinistra con descrizione -->
+            <div class="col-lg-7 mb-4">
+                <div class="left-section h-100">
+                    <h2 class="section-title">About MapForge</h2>
+                    <p class="lead">
+                        Forge your maps in Any Way you want.
+                    </p>
+                    <p>
+                        MapForge is the ideal tool for transforming simple images into interactive maps ready to use on the AnyWay platform.  
+                        With just a few steps, you can define walkable paths, set destinations, and instantly obtain a fully usable map 
+                        without any technical complications.
+                    </p>
+                    <p>
+                        &#9888; Important note: To use MapForge, the .NET 8.0 framework must be installed on your system. You can intsall it at this 
+                        <a href="https://dotnet.microsoft.com/it-it/download/dotnet/8.0">link</a>.
+                    </p>
+                    <div class="mt-4">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sezione destra con file da scaricare -->
+            <div class="col-lg-5">
+                <div class="download-section">
+                    <h2 class="section-title">Download</h2> 
+                    <!-- 
+                        <p>Seleziona e scarica le risorse di tuo interesse:</p>
+                    -->
+                    <!-- Lista file download -->
+                    <!--
+                    <div class="download-card mb-3 p-3">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-1">Complite Guide</h5>
+                            <span class="badge bg-primary">PDF</span>
+                        </div>
+                        <p class="mb-2 text-muted">Manuale dettagliato con istruzioni passo-passo</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>Size: 2.4 MB</small>
+                            <a href="#" class="btn btn-sm btn-download">
+                                <i class="bi bi-download"></i> Scarica
+                            </a>
+                        </div>
+                    </div>
+                    -->                    
+                    <div class="download-card mb-3 p-3 border-warning">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-1">MapForge.zip</h5>
+                            <span class="badge bg-warning text-dark">Zip</span>
+                        </div>
+                        <p class="mb-2 text-muted">Version: Beta</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <small>Size: < 1 MB</small>
+                            <a href="/download/mapforge" class="btn btn-sm btn-download bg-warning">
+                                <i class="bi bi-download"></i> Scarica
+                            </a>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <!--
+                        <div class="text-center mt-4">
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="bi bi-archive"></i> Vedi tutti i file
+                            </a>
+                        </div>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

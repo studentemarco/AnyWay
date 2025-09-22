@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnyWay Beta</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #0A192F;
+            color: #E6F1FF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #64edff;
+            /* Azzurro per il titolo */
+            margin: 0;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #8892B0;
+            margin-top: 10px;
+        }
+
+        .content-section {
+            background-color: #112240;
+            /* Blu scuro più chiaro per i blocchi di contenuto */
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 25px;
+            text-align: left;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .content-section h3 {
+            color: #64faff;
+            margin: 0;
+            margin-top: 0;
+            font-size: 1.5rem;
+        }
+
+        .link-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .link-button {
+            display: inline-block;
+            background-color: #64FFDA;
+            color: #0A192F;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .link-button:hover {
+            transform: translateY(-3px);
+            background-color: #52D8B9;
+        }
+
+        .video-container-v {
+            position: relative;
+            padding-bottom: 177.77%;
+            /* Rapporto d'aspetto 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .video-container-o {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* Rapporto d'aspetto 16:9 */
+            height: 0;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .video-container-v iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 5px;
+        }
+
+        .video-container-0 iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            border-radius: 5px;
+        }
+
+        /* Stile per la anteprima della documentazione */
+        .docs-preview {
+            color: #8892B0;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        p {
+            text-align: justify;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .flex-container video {
+            max-width: 50%;
+            /* Limita la larghezza massima del video */
+            height: auto;
+            border-radius: 8px;
+            /* Aggiunge bordi arrotondati */
+        }
+
+        .flex-container p {
+            flex-grow: 1;
+            /* Permette al paragrafo di espandersi */
+            flex-basis: 50%;
+            /* Suggerisce una larghezza di base del 50% */
+            font-size: 1.1rem;
+        }
+
+        .flex-container {
+            align-items: flex-start;
+            /* Allinea gli elementi in alto, per evitare che il video e il paragrafo abbiano altezze diverse */
+        }
+
+        @media (max-width: 768px) {
+            .flex-container {
+                flex-direction: column;
+            }
+
+            .flex-container video {
+                max-width: 100%;
+                /* Limita la larghezza massima del video */
+                height: auto;
+                border-radius: 8px;
+                /* Aggiunge bordi arrotondati */
+            }
+
+            .flex-container p {
+                flex-grow: 1;
+                /* Permette al paragrafo di espandersi */
+                flex-basis: 50%;
+                /* Suggerisce una larghezza di base del 50% */
+                font-size: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <img src="static/media/AWBetaLogo.png" alt="AnyWay logo" style="width: 50%;">
+        </header>
+
+        <div class="content-section">
+            <h3 style="text-align: center;">
+                PROJECT DESCRIPTION
+            </h3>
+
+            <div class="flex-container">
+                <p>
+                    AnyWay is a platform that allows you
+                    to navigate inside structures through maps shared by users. Designed
+                    for places such as schools, shopping centers, or large structures,
+                    AnyWay makes orientation simple and effective even where classic
+                    mapping systems do not reach. Anyone can explore the maps uploaded
+                    by the community through an intuitive interface, while those who wish
+                    to contribute with their own maps have a dedicated section to manage
+                    and publish them. The creation of the maps takes place through an
+                    external application, designed specifically for this purpose. Simply
+                    upload an image of the plan, position the points of interest, connect
+                    them with paths and the map will be ready to be integrated into the
+                    system. The internal algorithm calculates the optimal route between
+                    two points. AnyWay is also designed to be inclusive: for example
+                    marking paths inaccessible for wheelchairs or strollers and suggesting
+                    alternative routes automatically.
+                </p>
+                <video controls style="margin-top: 20px;">
+                    <source src="./static/media/AnyWay.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 style="text-align: right;">
+                PROJECT OVERVIEW
+            </h3>
+            <div class="flex-container">
+                <video controls style="margin-top: 20px; max-width: 100%;">
+                    <source src="./static/media/Overview.mp4" type="video/mp4">
+                    Il tuo browser non supporta il tag video.
+                </video>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>
+                TRY ANYWAY
+            </h3>
+
+            <div class="link-container">
+                <a style="text-align: center;" href="/Home" class="link-button">AnyWay Home</a>
+                <a style="text-align: center;" href="/MapForge" class="link-button">MapForge</a>
+                <!-- 
+                    <p class="docs-preview">Anteprima: Scopri come iniziare con la nostra guida dettagliata.</p>
+                    <a href="https://www.google.com" target="_blank" class="link-button">Visita un Altro Sito</a>
+                -->
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

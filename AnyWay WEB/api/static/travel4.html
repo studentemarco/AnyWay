@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnyWay</title>
+    <style>
+        :root {
+            --primary-color: #2A3F54;
+            --secondary-color: #1ABB9C;
+            --accent-color: #34495E;
+            --light-bg: #F8F9FA;
+            --text-dark: #2C3E50;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --sidebar-width: 280px;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            height: 100vh;
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+            overflow: hidden;
+        }
+
+        /* Sidebar */
+        #sidebar {
+            width: var(--sidebar-width);
+            background-color: var(--primary-color);
+            padding: 1.5rem;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+        }
+
+        #sidebar.hidden {
+            transform: translateX(-100%);
+        }
+
+        .input-group {
+            padding: 0 0.5rem;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            transition: border-color 0.3s ease;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        button.sb-button {
+            width: calc(100% - 1rem);
+            margin: 0 0.5rem;
+            padding: 0.875rem;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Main area */
+        #main {
+            position: relative;
+            height: 100vh;
+            margin-left: var(--sidebar-width);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: calc(100% - var(--sidebar-width));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: white;
+        }
+
+        #main.expanded {
+            margin-left: 0;
+            width: 100%;
+        }
+
+        /* Canvas styling */
+        #canva {
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            background: white;
+            max-width: 90%;
+            max-height: 80%;
+        }
+
+        @keyframes floorChange {
+            0% { transform: translateY(0); opacity: 1; }
+            50% { transform: translateY(-20px); opacity: 0.5; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .floor-change-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #87CEEB;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            z-index: 3000;
+            display: none;
+            max-width: 90%;
+            text-align: center;
+            pointer-events: none;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; top: 15%; }
+            15% { opacity: 1; top: 20%; }
+            85% { opacity: 1; top: 20%; }
+            100% { opacity: 0; top: 25%; }
+        }
+        
+        .floor-change-animation {
+            animation: floorChange 1s ease-in-out;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        /* Toolbars */
+        .bottom-toolbar {
+            position: absolute;
+            bottom: 2rem;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .toolbar {
+            visibility: hidden;
+        }
+
+        .toolbar.active {
+            visibility: visible;
+        }
+
+        .right-toolbar {
+            position: absolute;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(8px);
+            overflow: hidden;
+        }
+
+        .bottom-toolbar button,
+        .right-toolbar button {
+            padding: 0.75rem 1.25rem;
+            border: none;
+            background: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border-radius: 8px;
+        }
+
+        .step-indicator,
+        .floor-indicator {
+            padding: 0.75rem 1.5rem;
+            background: var(--secondary-color);
+            color: white;
+            font-weight: 600;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        /* Toggle button */
+        #toggleSidebar {
+            position: fixed;
+            top: 1.5rem;
+            left: calc(var(--sidebar-width) + 1.5rem);
+            padding: 0.75rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            z-index: 2000;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        #toggleSidebar:hover {
+            background: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Error message */
+        #errorMessage {
+            position: absolute;
+            top: 1rem;
+            padding: 1rem 2rem;
+            background: #e74c3c;
+            color: white;
+            border-radius: 8px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 14px;
+            color: var(--text-dark);
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%232A3F54%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 0.65em auto;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(26, 187, 156, 0.1);
+        }
+        
+        select option {
+            padding: 0.5rem;
+            background: white;
+            color: var(--text-dark);
+        }
+        
+        select option[disabled]:first-child {
+            color: #999;
+        }
+        
+        .input-group select:invalid {
+            color: #999;
+        }
+        
+        .input-group select option {
+            color: var(--text-dark);
+        }
+
+        /*
+        .floor-img {
+            transition: transform 2.5s ease-in-out;
+            transform-origin: center center;
+        } */
+
+        /*
+        @media (max-width: 768px) {
+            #sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+            }
+
+            #sidebar.active {
+                transform: translateX(0);
+            }
+
+            #main {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+            */
+    </style>
+</head>
+
+<body>
+    <div id="sidebar">
+        <div class="input-group">
+            <input id="mapId" type="text" placeholder="ID Mappa" />
+        </div>
+        <button class="sb-button" onclick="loadMap()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+                style="margin-right: 8px;">
+                <path
+                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z" />
+                <path
+                    d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z" />
+            </svg>
+            Carica Mappa
+        </button>
+        <div class="input-group">
+            <select id="partenza">
+                <option value="" disabled selected>Punto di partenza</option>
+            </select>
+        </div>
+        <div class="input-group">
+            <select id="arrivo">
+                <option value="" disabled selected>Punto di arrivo</option>
+            </select>
+        </div>
+        <button class="sb-button" id="navigate" onclick="Navigate()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+                style="margin-right: 8px;">
+                <path fill-rule="evenodd"
+                    d="M8 0a.5.5 0 0 1 .5.5v.518A7 7 0 0 1 14.982 7.5h.518a.5.5 0 0 1 0 1h-.518A7 7 0 0 1 8.5 14.982v.518a.5.5 0 0 1-1 0v-.518A7 7 0 0 1 1.018 8.5H.5a.5.5 0 0 1 0-1h.518A7 7 0 0 1 7.5 1.018V.5A.5.5 0 0 1 8 0zm-.5 2.02A6 6 0 0 0 2.02 7.5h1.005A5 5 0 0 1 7.5 3.025V2.02zm1 0v1.005A5 5 0 0 1 12.975 7.5h1.005A6 6 0 0 0 8.5 2.02zM12.975 8.5A5 5 0 0 1 8.5 12.975v1.005a6 6 0 0 0 5.48-5.48h-1.005zM7.5 12.975A5 5 0 0 1 3.025 8.5H2.02a6 6 0 0 0 5.48 5.48v-1.005z" />
+            </svg>
+            Avvia Navigazione
+        </button>
+    </div>
+
+    <div id="main">
+        <button id="toggleSidebar">&#9776</button>
+
+        <canvas id="canva" class="floor-img"></canvas>
+        <div id="errorMessage">La mappa selezionata non esiste o risulta corrotta</div>
+
+        <div class="bottom-toolbar toolbar">
+            <button onclick="SB()">&larr;</button>
+            <div id="step-label" class="step-indicator">Overview</div>
+            <button onclick="SF()">&rarr;</button>
+        </div>
+
+        <div class="right-toolbar toolbar">
+            <button onclick="floorUp()">&uarr;</button>
+            <div id="floor-label" class="floor-indicator">Piano</div>
+            <button onclick="floorDown()">&darr;</button>
+        </div>
+    </div>
+    <div id="floorChangeAlert" class="floor-change-alert"></div>
+    <script src="/static/travel4.js"></script>
+</body>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carica Mappa</title>
+    <script>
+        function addIdToURL() {
+            // Preleva l'ID dal campo di input
+            const id = document.getElementById('id').value;
+            
+            // Se l'ID è presente, aggiungi l'ID come parametro di query
+            const form = document.getElementById('uploadForm');
+            form.action = "/load/?id=" + encodeURIComponent(id);  // Aggiungi l'ID all'URL
+        }
+    </script>
+</head>
+<body>
+    <h1>Carica la tua Mappa</h1>
+    <form id="uploadForm" action="/load/" method="post" enctype="multipart/form-data" onsubmit="addIdToURL()">
+        <label for="id">ID della Mappa:</label>
+        <input type="text" id="id" name="id" required><br><br>
+
+        <label for="file">Mappa (JSON):</label>
+        <input type="file" id="file" name="file" accept=".json" required><br><br>
+
+        <button type="submit">Carica Mappa</button>
+    </form>
+</body>
+</html>
